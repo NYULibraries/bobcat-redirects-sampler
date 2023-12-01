@@ -186,7 +186,7 @@ function getTestCasePaths() {
     testCaseFiles.forEach( testCaseFile => {
         const lines = fs.readFileSync( testCaseFile, 'utf-8' );
         lines.split( /\r?\n/ ).forEach( line => {
-            if ( line.startsWith( 'https://bobcat.library.nyu.edu/permalink' ) ) {
+            if ( line.match( new RegExp( '^https?://bobcat.library.nyu.edu/permalink.*/' ) ) ) {
                 const path = new URL( line ).pathname;
                 testCaseUrls.push( path );
             }
