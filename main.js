@@ -218,7 +218,7 @@ async function initializePlaywright( timeoutOption ) {
 
 function parseArgs() {
     return yargs( hideBin( process.argv ) )
-        .usage( `Usage: $0 [-b|bobcat-redirects-endpoint <Bobcat Redirects endpoint>] [-x|--excude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <${TEST_CASE_GROUPS.join( '|' )}>` )
+        .usage( `Usage: $0 [-b|bobcat-redirects-endpoint <Bobcat Redirects endpoint>] [-x|--exclude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <TEST_CASE_GROUP: ${TEST_CASE_GROUPS.join( '|' )}>` )
         .option( 'bobcat-redirects-endpoint', {
             alias       : 'b',
             description : 'Override Bobcat Redirects endpoint',

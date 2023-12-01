@@ -20,7 +20,7 @@ For the basic usage message, run `main.js --help`:
 ```shell
 $ node main.js --help
 Usage: main.js [-b|bobcat-redirects-endpoint <Bobcat Redirects endpoint>] [-x|--
-excude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <libguides>
+exclude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <TEST_CASE_GROUP: libguides>
 
 Options:
       --help                       Show help                           [boolean]
