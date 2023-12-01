@@ -118,9 +118,13 @@ async function fetchResponseSamples( samplers ) {
                 failed = true;
                 logger.error( `${testCasePath}: failed to fetch response for ${sampler.name}` );
 
-                const screenshotFile = path.join( SCREENSHOTS_DIR, sampler.getServiceResponseScreenshotFilePathRelative( key ) );
-                await page.screenshot( { path : screenshotFile } );
-                logger.error( `${testCasePath}: saved screenshot file ${screenshotFile}` );
+                try {
+                    const screenshotFile = path.join( SCREENSHOTS_DIR, sampler.getServiceResponseScreenshotFilePathRelative( key ) );
+                    await page.screenshot( { path : screenshotFile } );
+                    logger.error( `${testCasePath}: saved screenshot file ${screenshotFile}` );
+                } catch ( e ) {
+                    logger.error( `${testCasePath}: error saving screenshot file ${screenshotFile}: ${e}` );
+                }
             }
         }
 
