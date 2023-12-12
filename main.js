@@ -13,6 +13,9 @@ import { hideBin } from 'yargs/helpers';
 import {
     BobcatRedirectsServiceSampler
 } from './lib/classes/BobcatRedirectsServiceSampler.js';
+import {
+    BobcatPrimoClassicServiceSampler
+} from './lib/classes/BobcatPrimoClassicServiceSampler.js';
 
 // https://stackoverflow.com/questions/64383909/dirname-is-not-defined-in-node-14-version
 const __filename = fileURLToPath( import.meta.url );
@@ -304,6 +307,11 @@ async function main() {
 
     let serviceSamplers = [
         new BobcatRedirectsServiceSampler(
+            testCaseGroup,
+            page,
+            bobcatRedirectsEndpointOverride,
+        ),
+        new BobcatPrimoClassicServiceSampler(
             testCaseGroup,
             page,
             bobcatRedirectsEndpointOverride,
