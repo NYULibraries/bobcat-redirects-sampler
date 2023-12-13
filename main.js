@@ -106,6 +106,7 @@ async function fetchResponseSamples( samplers ) {
                 timeZone : 'America/New_York',
             } ),
             sampleFiles    : {},
+            screenshots    : {},
         };
 
         let failed = false;
@@ -131,11 +132,8 @@ async function fetchResponseSamples( samplers ) {
             }
         }
 
-        if ( failed ) {
-            continue;
-        }
-
         // Write out sample files
+        let sampleFileSaveError = false;
         Object.keys( indexEntry.sampleFiles ).forEach( serviceName => {
             const sampleFile = indexEntry.sampleFiles[ serviceName ];
             const serviceResponseSampleFilePathAbsolute = path.join( RESPONSE_SAMPLES_DIR, sampleFile );
@@ -147,17 +145,17 @@ async function fetchResponseSamples( samplers ) {
             } catch ( error ) {
                 logger.error( `${testCasePath}: failed to write sample file ${serviceResponseSampleFilePathAbsolute}: ${error}` );
 
-                failed = true;
+                sampleFileSaveError = true;
             }
         } );
 
-        if ( failed ) {
+        if ( sampleFileSaveError ) {
             logger.error( `${testCasePath}: test group sample directory might be in an inconsistent state` );
-
-            continue;
         }
 
-        logger.info( `${testCasePath}: fetched responses: ${samplers.map( sampler => sampler.name ).join( ', ' )}` );
+        if ( ! failed ) {
+            logger.info( `${testCasePath}: fetched responses: ${samplers.map( sampler => sampler.name ).join( ', ' )}` );
+        }
 
         // Update index
         index[ testCasePath ] = indexEntry;
