@@ -110,6 +110,7 @@ async function fetchResponseSamples( samplers ) {
         };
 
         let failed = false;
+        let screenshotFileSaveError = false;
         let html = {};
         // Fetch response HTML for each service
         for ( let i = 0; i < samplers.length; i++ ) {
@@ -125,11 +126,17 @@ async function fetchResponseSamples( samplers ) {
                 try {
                     const screenshotFile = path.join( SCREENSHOTS_DIR, sampler.getServiceResponseScreenshotFilePathRelative( key ) );
                     await page.screenshot( { path : screenshotFile } );
+                    indexEntry.screenshots[ sampler.serviceName ] = screenshotFile;
                     logger.error( `${testCasePath}: saved screenshot file ${screenshotFile}` );
                 } catch ( e ) {
+                    screenshotFileSaveError = true;
                     logger.error( `${testCasePath}: error saving screenshot file ${screenshotFile}: ${e}` );
                 }
             }
+        }
+
+        if ( screenshotFileSaveError ) {
+            logger.error( `${testCasePath}: test group screenshots directory might be in an inconsistent state` );
         }
 
         // Write out sample files
