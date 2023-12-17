@@ -123,8 +123,8 @@ async function fetchResponseSamples( samplers ) {
                 failed = true;
                 logger.error( `${testCasePath}: failed to fetch response for ${sampler.name}` );
 
+                let screenshotFile = path.join( SCREENSHOTS_DIR, sampler.getServiceResponseScreenshotFilePathRelative( key ) );
                 try {
-                    const screenshotFile = path.join( SCREENSHOTS_DIR, sampler.getServiceResponseScreenshotFilePathRelative( key ) );
                     await page.screenshot( { path : screenshotFile } );
                     indexEntry.screenshots[ sampler.serviceName ] = screenshotFile;
                     logger.error( `${testCasePath}: saved screenshot file ${screenshotFile}` );
