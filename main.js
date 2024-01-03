@@ -14,6 +14,9 @@ import {
     BobcatRedirectsServiceSampler
 } from './lib/classes/BobcatRedirectsServiceSampler.js';
 import {
+    BobcatRedirectsNewVersionServiceSampler
+} from './lib/classes/BobcatRedirectsNewVersionServiceSampler.js';
+import {
     BobcatPrimoClassicServiceSampler
 } from './lib/classes/BobcatPrimoClassicServiceSampler.js';
 
@@ -226,10 +229,15 @@ async function initializePlaywright( timeoutOption ) {
 
 function parseArgs() {
     return yargs( hideBin( process.argv ) )
-        .usage( `Usage: $0 [-b|bobcat-redirects-endpoint <Bobcat Redirects endpoint>] [-x|--exclude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <TEST_CASE_GROUP: ${TEST_CASE_GROUPS.join( '|' )}>` )
+        .usage( `Usage: $0 [-b|bobcat-redirects-endpoint <Bobcat Redirects endpoint>] [-n|bobcat-redirects-new-version-endpoint <Bobcat Redirects New Version endpoint>] [-x|--exclude <service name> [--headed] [-l|--limit <number>] [-r|--replace] <TEST_CASE_GROUP: ${TEST_CASE_GROUPS.join( '|' )}>` )
         .option( 'bobcat-redirects-endpoint', {
             alias       : 'b',
             description : 'Override Bobcat Redirects endpoint',
+            type        : 'string',
+        } )
+        .option( 'bobcat-redirects-new-version-endpoint', {
+            alias       : 'b',
+            description : 'Override Bobcat Redirects New Version endpoint',
             type        : 'string',
         } )
         .option( 'headed', {
@@ -312,6 +320,11 @@ async function main() {
 
     let serviceSamplers = [
         new BobcatRedirectsServiceSampler(
+            testCaseGroup,
+            page,
+            bobcatRedirectsEndpointOverride,
+        ),
+        new BobcatRedirectsNewVersionServiceSampler(
             testCaseGroup,
             page,
             bobcatRedirectsEndpointOverride,
