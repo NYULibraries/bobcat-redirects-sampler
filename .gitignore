@@ -17,6 +17,9 @@ screenshots/*
 screenshots/libguides/*
 !screenshots/libguides/.gitkeep
 
+tmp/*
+!tmp/.gitkeep
+
 # Logs
 *.log
 npm-debug.log*
